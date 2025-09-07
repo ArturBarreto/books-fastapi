@@ -1,10 +1,9 @@
 from typing import List, Optional, Tuple
 from app.core.exceptions import NotFoundError
 from app.models.book_models import Book, BookCreate, BookUpdate
-from app.repository.book_repository import BookRepositoryInMemory
 
 class BookService:
-    def __init__(self, repo: BookRepositoryInMemory) -> None:
+    def __init__(self, repo) -> None:
         self._repo = repo
 
     def list_books(self, *, author: Optional[str], genre: Optional[str], year: Optional[int],
@@ -20,8 +19,7 @@ class BookService:
         return Book(**b)
 
     def create_book(self, payload: BookCreate) -> Book:
-        new_dict = payload.model_dump()
-        created = self._repo.create(new_dict)
+        created = self._repo.create(payload.model_dump())
         return Book(**created)
 
     def update_book(self, book_id: int, payload: BookUpdate) -> Book:

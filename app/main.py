@@ -1,11 +1,16 @@
 from fastapi import FastAPI
 from app.api.v1.books_controller import router as books_router
+from app.core.database import create_db_and_tables
 
 app = FastAPI(
     title="Books API",
     version="1.0.0",
-    description="Simple book management API (layered architecture) using in-memory storage.",
+    description="Books API with SQLite via SQLModel.",
 )
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
 
 @app.get("/", tags=["Health"])
 def health() -> dict:

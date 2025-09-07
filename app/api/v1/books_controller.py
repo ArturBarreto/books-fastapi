@@ -1,18 +1,18 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from sqlmodel import Session
 
 from app.core.exceptions import NotFoundError
+from app.core.database import get_session
 from app.models.book_models import Book, BookCreate, BookUpdate
-from app.repository.book_repository import BookRepositoryInMemory
+from app.repository.book_repository_sql import BookRepositorySQL
 from app.services.book_service import BookService
 
 router = APIRouter()
 
-_repo = BookRepositoryInMemory()
-_service = BookService(_repo)
-
-def get_service() -> BookService:
-    return _service
+def get_service(session: Session = Depends(get_session)) -> BookService:
+    repo = BookRepositorySQL(session)
+    return BookService(repo)
 
 @router.get("", response_model=List[Book])
 def list_books(

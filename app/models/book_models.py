@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, Field
+from sqlmodel import SQLModel, Field as SQLField
 
 MAX_YEAR = 2024  # per exercise requirement
 
@@ -28,3 +29,13 @@ class BookUpdate(BaseModel):
 
 class Book(BookBase):
     id: int
+
+class BookORM(SQLModel, table=True):
+    __tablename__ = "books"
+
+    id: Optional[int] = SQLField(default=None, primary_key=True, index=True)
+    title: str
+    author: str
+    isbn: Optional[str] = None
+    publication_year: Optional[int] = None
+    genre: Optional[str] = None
