@@ -1,7 +1,7 @@
 # 📚 Books API (FastAPI)
 
 A **FastAPI** application for managing a collection of books with full **CRUD operations**.  
-This project was built as part of a technical interview exercise at O|Tech.
+This project was built as part of a technical interview exercise at O|tech.
 
 ---
 
@@ -157,5 +157,5 @@ The test suite covers:
 - **Artur Gomes Barreto**  
   - [LinkedIn](https://www.linkedin.com/in/arturgomesbarreto/)  
   - [GitHub](https://github.com/ArturBarreto) 
-  - [Email](artur.gomes.barreto@gmail.com)  
+  - [Email](mailto:artur.gomes.barreto@gmail.com)  
   - [WhatsApp](https://api.whatsapp.com/send?phone=35677562008)  
