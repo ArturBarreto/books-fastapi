@@ -4,23 +4,24 @@ from app.main import app
 from app.core.database import get_session
 from sqlalchemy.pool import StaticPool
 
-# 1) One shared in-memory DB connection for the whole test run
-test_engine = create_engine(
-    "sqlite://",  # in-memory
-    echo=False,
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,  # <-- this keeps the same connection alive
-)
-
-# 2) Create the tables ON THIS ENGINE
-SQLModel.metadata.create_all(test_engine)
-
-# 3) Dependency override to use sessions from the same engine
-def get_test_session():
-    with Session(test_engine) as session:
-        yield session
-
-app.dependency_overrides[get_session] = get_test_session
+# # For simple SQLite storage
+# # 1) One shared in-memory DB connection for the whole test run
+# test_engine = create_engine(
+#     "sqlite://",  # in-memory
+#     echo=False,
+#     connect_args={"check_same_thread": False},
+#     poolclass=StaticPool,  # <-- this keeps the same connection alive
+# )
+#
+# # 2) Create the tables ON THIS ENGINE
+# SQLModel.metadata.create_all(test_engine)
+#
+# # 3) Dependency override to use sessions from the same engine
+# def get_test_session():
+#     with Session(test_engine) as session:
+#         yield session
+#
+# app.dependency_overrides[get_session] = get_test_session
 
 # 4) Use TestClient as a context manager so startup/shutdown events run correctly
 client_cm = TestClient(app)

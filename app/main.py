@@ -8,9 +8,10 @@ app = FastAPI(
     description="Books API with SQLite via SQLModel.",
 )
 
-@app.on_event("startup")
-def on_startup():
-    create_db_and_tables()
+# # For simple SQLite storage
+# @app.on_event("startup")
+# def on_startup():
+#     create_db_and_tables()
 
 @app.get("/", tags=["Health"])
 def health() -> dict:

@@ -6,13 +6,21 @@ from app.core.exceptions import NotFoundError
 from app.core.database import get_session
 from app.models.book_models import Book, BookCreate, BookUpdate
 from app.repository.book_repository_sql import BookRepositorySQL
+from app.repository.book_repository import BookRepositoryInMemory
 from app.services.book_service import BookService
 
 router = APIRouter()
 
-def get_service(session: Session = Depends(get_session)) -> BookService:
-    repo = BookRepositorySQL(session)
-    return BookService(repo)
+# # For simple SQLite storage
+# def get_service(session: Session = Depends(get_session)) -> BookService:
+#     repo = BookRepositorySQL(session)
+#     return BookService(repo)
+
+# # For simple in-memory storage
+_inmem_repo = BookRepositoryInMemory()
+def get_service(_: Session = Depends(get_session)) -> BookService:
+    # exercise requires simple in-memory storage
+    return BookService(_inmem_repo)
 
 @router.get("", response_model=List[Book])
 def list_books(
