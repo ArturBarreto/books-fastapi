@@ -11,16 +11,16 @@ from app.services.book_service import BookService
 
 router = APIRouter()
 
-# # For simple SQLite storage
-# def get_service(session: Session = Depends(get_session)) -> BookService:
-#     repo = BookRepositorySQL(session)
-#     return BookService(repo)
-
 # # For simple in-memory storage
 _inmem_repo = BookRepositoryInMemory()
 def get_service(_: Session = Depends(get_session)) -> BookService:
     # exercise requires simple in-memory storage
     return BookService(_inmem_repo)
+
+# # For simple SQLite storage
+# def get_service(session: Session = Depends(get_session)) -> BookService:
+#     repo = BookRepositorySQL(session)
+#     return BookService(repo)
 
 @router.get("", response_model=List[Book])
 def list_books(
