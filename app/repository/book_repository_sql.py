@@ -1,4 +1,3 @@
-# app/repository/book_repository_sql.py
 from typing import List, Optional, Tuple
 from sqlmodel import select, Session
 from app.models.book_models import BookORM

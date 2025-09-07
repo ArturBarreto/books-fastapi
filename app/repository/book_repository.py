@@ -4,7 +4,6 @@ from itertools import count
 class BookRepositoryInMemory:
     """
     A very simple in-memory repository backed by a list of dicts.
-    This is intentionally lightweight for the exercise.
     """
     def __init__(self) -> None:
         self._books: List[Dict] = []
